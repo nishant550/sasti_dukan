@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+
+
+{% load static %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex ">
+        
+        {% for cat in category %}
+            <a href="#" class="mx-auto" style="text-decoration: none; border: 3px solid black; border-radius: 10px; padding: 4px; margin-top: 10px;">
+                {{ cat.title }}
+            </a>
+        {% endfor %}
+        
+
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        
+        {% if products %}
+            {% include 'components/product_card.html' %}
+            {% else %}
+            <h2>there are no products</h2>
+        {% endif %}
+            
+    </div>
+</div>
+
+
+{% endblock %}
+{% block css %}
+<style>
+    main{
+        /* display: grid;
+        place-items: center;
+        height: 100vh;
+        color: rgb(230, 21, 21);
+        background-color: aqua;
+        text-decoration: underline;
+        background-image: url(); */
+    }
+</style>
+{% endblock %}
+{% block js %}
+<script></script>
+{% endblock  %}

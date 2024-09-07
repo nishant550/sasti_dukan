@@ -6,16 +6,22 @@ from main import views as mv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/customer',mv.customer_login_view, name='customer_login'),
-    path('register/customer',mv.customer_register_view, name='customer_register'),
-    path('forgot/customer',mv.customer_forgot_pass_view, name='customer_forgot_pass'),
-    path('login/seller',mv.seller_login_view, name='seller_login'),
-    path('register/seller',mv.seller_register_view, name='seller_register'),
-    path('forgot/seller',mv.seller_forgot_pass_view, name='seller_forgot_pass'),
-    path('logout',mv.logout_view, name='logout'),
-    path('',mv.home_view, name='home'),
-    path("__reload__/", include("django_browser_reload.urls")),
+    path('accounts/', include('allauth.urls')),
 
+    # customer
+    path('login/customer', mv.customer_login_view, name='customer_login'),
+    path('register/customer', mv.customer_register_view, name='customer_register'),
+    path('forgot/customer', mv.customer_forgot_pass_view, name='customer_forgot_pass'),
+    # seller
+    path('login/seller', mv.seller_login_view, name='seller_login'),
+    path('register/seller', mv.seller_register_view, name='seller_register'),
+    path('forgot/seller', mv.seller_forgot_pass_view, name='seller_forgot_pass'),
+    # common to both
+    path('logout', mv.logout_view, name='logout'),
+    # index
+    path('', mv.home_view, name='home'),
+    path('detail/<int:id>/', mv.detail_view, name='detail'),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 
 if settings.DEBUG:
