@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
@@ -16,6 +16,20 @@ def home_view(request):
         'category':categories
     }
     return render(request, 'home.html',ctx)
+
+def category_view(request,name):
+    cat = get_object_or_404(Category, slug=name)
+    products = get_list_or_404(Product, category=cat)
+    return render(
+        request, 'category_listing.html',
+        context = {
+            'products': products, 
+            'category': Category.objects.all(),
+            'cat': cat, 
+        }
+    )
+
+
 
 # seller views
 def seller_login_view(request):
@@ -57,8 +71,12 @@ def customer_register_view(request):
 def customer_forgot_pass_view(request):
     return render(request, 'accounts/customer/forgot_password.html')
 
-def detail_view(request,id):
+def detail_view(request, id):
+    product = Product.objects.get(id=id)
+    # get upto 3 similar products
+    similar_products = Product.objects.filter(category=product.category).exclude(id=id).order_by('?')[:3] # order by random
     ctx = {
-        'products' : Product.objects.get(id=id)
+        'product': product,
+        'similar_products': similar_products
     }
-    return render(request,'detail.html',ctx)
+    return render(request, 'detail.html', ctx)

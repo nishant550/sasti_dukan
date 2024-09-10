@@ -1,18 +1,51 @@
+{% block content %}
+
+
 <div class="container my-2">
     <div class="row">
+        <a href="{% url 'detail' product.id %}">
+            {% for product in products %}
+            <div class=" col-md-4 col-sm-">
+                <div class="card">
 
-        {% for  product in products  %}
-            <div class="card" >
-                <img src="{{ product.image.url }}" alt="{{ product.title}} "style="height: 400px; width: 400px;">
-                <div class="card-body" >
-                    <h3>{{ product.title|truncatewords:4 }}</h3>
-                    <p class="card-price">{{ product.price }}</p>
-                    <p class="card-time">{{ product.created_at|date:"F J, Y"}}</p>
-                </div>
-                <div class="p-2">
-                    <a href="{% url 'detail' product.id %}"> View Detail</a>
+                    <img src="{{ product.image.url }}" alt="{{ product.title }} "
+                        style="height: 300px; width: 300px; padding-top: 5px;" />
+                    <div class="card-body">
+                        <h3>{{ product.title|truncatewords:3 }}</h3>
+                        <p class="card-price">{{ product.price }}</p>
+                        <p class="card-time">{{ product.created_at|date:'F-d-Y' }}</p>
+                    </div>
+                    <div class="p-2">
+                        <a href="{% url 'detail' product.id %}">View Detail</a>
+                    </div>
                 </div>
             </div>
+        </a>
         {% endfor %}
     </div>
 </div>
+
+
+{% endblock %}
+
+
+{% block css %}
+
+
+<style>
+    .card:hover {
+        background-color: gray;
+    }
+
+    img {
+        align-self: center;
+    }
+
+    .card {
+        margin: 15px 0px 15px 0px;
+
+    }
+</style>
+
+
+{% endblock %}

@@ -20,7 +20,8 @@ urlpatterns = [
     path('logout', mv.logout_view, name='logout'),
     # index
     path('', mv.home_view, name='home'),
-    path('detail/<int:id>/', mv.detail_view, name='detail'),
+    path('cat/<slug:name>', mv.category_view, name='category'),
+    path('detail/<int:id>', mv.detail_view, name='detail'),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
 
